@@ -54,62 +54,63 @@
         </div>
     </header>
 
-
     <div class="form-container mt-5">
         <h1 class="form-title">TUS DATOS</h1>
         <p class="form-subtitle">¿Cómo podemos contactar con usted?</p>
-        <form method="POST" action="/ruta-de-registro">
+        <form method="POST" action="/ruta-de-registro" onsubmit="return validateForm(event)">
             @csrf
             <fieldset>
                 <legend>Datos Personales</legend>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                    <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
                 </div>
                 <div class="form-group">
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos"
-                        required>
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos">
+                    <div class="invalid-feedback">Por favor, ingresa tus apellidos.</div>
                 </div>
                 <div class="form-group">
                     <label for="fecha_nac">Fecha de Nacimiento</label>
-                    <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" required>
+                    <input type="date" class="form-control" id="fecha_nac" name="fecha_nac">
+                    <div class="invalid-feedback">Por favor, ingresa tu fecha de nacimiento.</div>
                 </div>
                 <div class="form-group">
                     <label for="tarifa">Tarifa</label>
-                    <select class="form-control" id="tarifa" name="tarifa" required>
+                    <select class="form-control" id="tarifa" name="tarifa">
                         <option value="40">HADES - 40 €/mes</option>
                         <option value="35">ZEUS - 35 €/mes</option>
                         <option value="30">POSEIDÓN - 30 €/mes</option>
                     </select>
+                    <div class="invalid-feedback">Por favor, selecciona una tarifa.</div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="mi-email@example.com"
-                        required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="mi-email@example.com">
+                    <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido.</div>
                 </div>
                 <div class="form-group">
                     <label for="username">Nombre de Usuario</label>
                     <input type="text" class="form-control" id="username" name="username"
-                        placeholder="Nombre de Usuario" required>
+                        placeholder="Nombre de Usuario">
+                    <div class="invalid-feedback">Por favor, ingresa un nombre de usuario.</div>
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña"
-                        required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+                    <div class="invalid-feedback">Por favor, ingresa una contraseña.</div>
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation">Confirmar Contraseña</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
-                        placeholder="Confirmar Contraseña" required>
+                        placeholder="Confirmar Contraseña">
+                    <div class="invalid-feedback">Por favor, confirma tu contraseña.</div>
                 </div>
             </fieldset>
             <button type="submit" class="btn btn-primary mt-4">Enviar</button>
         </form>
-
     </div>
-
-
 
     <div class="footer-container mt-5">
         <footer class="footer">
@@ -140,12 +141,12 @@
         </footer>
     </div>
 
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+    <script src="./js/validation.js"></script>
 </body>
 
 </html>
