@@ -141,7 +141,7 @@
                         <strong>Ilimitado</strong>
                     </p>
                     <p class="price-three-months">105 <span class="currency">€ (3 meses)</span></p>
-                    <a href="#hades" class="btn">Apuntate</a>
+                    <a href="#hades" id="btn1" class="btn">Apuntate</a>
                 </div>
                 <div class="pricing-card">
                     <h3>ZEUS</h3>

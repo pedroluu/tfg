@@ -17,3 +17,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', HomeController::class);
 Route::get('form', FormController::class);
+
+
+Route::view('/login', 'login');
+// Route::post('/ruta-de-login', [LoginController::class, 'authenticate']);
