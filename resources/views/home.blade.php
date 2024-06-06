@@ -4,22 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="./css/styles.css" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <title>ManagerPro</title>
 </head>
 
 <body>
     <header class="header">
         <div class="logo">
+            <a href="{{ route('home') }}">
             <img src="./img/logo.png" alt="Logo" class="img-fluid">
+        </a>
         </div>
         <h1>HADES BOX CENTER</h1>
         <h2>FORGING FITNESS</h2>
         <p>VEN A ENTRENAR CON NOSOTROS</p>
-        <button class="btn btn-light">Apúntate ahora</button>
+        <a class="btn btn-light" href="{{ route('form') }}">Apúntate ahora</a>
         <div class="navbar navbar-expand-lg navbar-dark">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,10 +32,10 @@
                         <a class="nav-link" href="#"><i class="fas fa-users"></i> Coaches</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-running"></i> Actividades</a>
+                        <a class="nav-link" href="#actividades"><i class="fas fa-running"></i> Actividades</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-dollar-sign"></i> Tarifas</a>
+                        <a class="nav-link" href="#tarifas"><i class="fas fa-dollar-sign"></i> Tarifas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-envelope"></i> Contacto</a>
@@ -42,10 +43,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-map-marker-alt"></i> Localización</a>
                     </li>
+                    @guest('client')
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"><i
-                                class="fas fa-sign-in-alt"></i> Login</a>
+                        <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
                     </li>
+                @endguest
+                @auth('client')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i> Cuenta
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ route('client.dashboard') }}">Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endauth
                 </ul>
             </div>
         </div>
@@ -82,7 +98,7 @@
             </div>
         </section>
 
-        <section class="my-5">
+        <section  id="actividades" class="my-5">
             <h2 class="text-center">Actividades y Clases</h2>
             <div class="legend">
                 <span class="legend-item"><span class="color-box funcional"></span>Funcional</span>
@@ -141,7 +157,7 @@
                         <strong>Ilimitado</strong>
                     </p>
                     <p class="price-three-months">105 <span class="currency">€ (3 meses)</span></p>
-                    <a href="#hades" id="btn1" class="btn">Apuntate</a>
+                    <a href="{{ route('form') }}" class="btn custom-btn">Apuntate</a>
                 </div>
                 <div class="pricing-card">
                     <h3>ZEUS</h3>
@@ -150,7 +166,7 @@
                         <strong>15/mes</strong>
                     </p>
                     <p class="price-three-months">95 <span class="currency">€ (3 meses)</span></p>
-                    <a href="#zeus" class="btn">Apuntate</a>
+                    <a href="{{ route('form') }}" class="btn custom-btn">Apuntate</a>
                 </div>
                 <div class="pricing-card">
                     <h3>POSEIDÓN</h3>
@@ -159,7 +175,7 @@
                         <strong>10/mes</strong>
                     </p>
                     <p class="price-three-months">80 <span class="currency">€ (3 meses)</span></p>
-                    <a href="#poseidon" class="btn">Apuntate</a>
+                    <a href="{{ route('form') }}" class="btn custom-btn">Apuntate</a>
                 </div>
             </div>
         </section>
@@ -192,29 +208,7 @@
         </div>
     </footer>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

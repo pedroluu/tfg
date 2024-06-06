@@ -1,0 +1,155 @@
+/* login-styles.css */
+
+.header {
+    background-image: url("../img/fondoNav.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.header .logo img {
+    max-height: 100px;
+}
+
+.header h1 {
+    margin-top: 20px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.header h2 {
+    font-size: 2rem;
+    margin-top: 10px;
+}
+
+.header p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.header .btn {
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+.header .navbar {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: white;
+    font-size: 1rem;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #ccc;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 500px); /* Altura mínima ajustada */
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+}
+
+.card-header {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.card-body .form-group {
+    margin-bottom: 15px;
+}
+
+.card-body .form-control {
+    border-radius: 5px;
+}
+
+.card-body .invalid-feedback {
+    display: none;
+}
+
+.card-body .form-control.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+.btn-primary {
+    background-color: #009999;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #007777;
+}
+
+.footer {
+    background-color: #123;
+    color: #fff;
+    padding: 40px 0;
+}
+
+.footer .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-section {
+    flex: 1 1 200px;
+    max-width: 300px;
+}
+
+.footer-section h4 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #009999;
+}
+
+.footer-section p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #bbb;
+}
+
+.footer-section a {
+    color: #009999;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #bbb;
+}

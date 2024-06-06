@@ -1,30 +1,22 @@
+// public/js/login-validation.js
 function validateLoginForm(event) {
+    const usuarioInput = document.getElementById("Usuario");
+    const passwordInput = document.getElementById("password");
     let valid = true;
 
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-
-    if (!email.value || !validateEmail(email.value)) {
-        email.classList.add("is-invalid");
+    if (usuarioInput.value.trim() === "") {
+        usuarioInput.classList.add("is-invalid");
         valid = false;
     } else {
-        email.classList.remove("is-invalid");
+        usuarioInput.classList.remove("is-invalid");
     }
 
-    if (!password.value) {
-        password.classList.add("is-invalid");
+    if (passwordInput.value.trim() === "") {
+        passwordInput.classList.add("is-invalid");
         valid = false;
     } else {
-        password.classList.remove("is-invalid");
+        passwordInput.classList.remove("is-invalid");
     }
 
-    if (!valid) {
-        event.preventDefault();
-    }
     return valid;
-}
-
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
 }
