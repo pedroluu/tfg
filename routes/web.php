@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReservaController;
+use App\Models\Clase;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('form', FormController::class)->name('form');
@@ -22,7 +23,12 @@ Route::middleware('auth:admin')->group(function () {
 
 Route::middleware('auth:client')->group(function () {
     Route::get('/client/dashboard', [ClientController::class, 'index'])->name('client.dashboard');
-    // Otras rutas de cliente
+    Route::get('/reservar-clases', function () {
+        $clases = Clase::all();
+        return view('reserva_clases', compact('clases'));
+    })->name('reservar.clases');
+    Route::post('/cancelar-reserva/{id}', [ReservaController::class, 'cancelarReserva'])->name('cancelar.reserva');
+    Route::post('/reservar-clase', [ReservaController::class, 'reservarClase'])->name('reservar.clase');
+    Route::post('/client/update', [ClientController::class, 'update'])->name('client.update');
+    // Otras rutas de client
 });
-
-Route::post('/reservar-clase', [ReservaController::class, 'reservarClase'])->name('reservar.clase');

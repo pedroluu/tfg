@@ -1,18 +1,37 @@
 <?php
-// app/Http/Controllers/ClientController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Clase;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
     public function index()
     {
-        // Obtén todas las clases o aplica algún filtro según tu necesidad
-        $clases = Clase::all();
+        $user = Auth::guard('client')->user();
+        return view('client.dashboard', compact('user'));
+    }
 
-        // Pasa las clases a la vista
-        return view('client.dashboard', compact('clases'));
+    public function update(Request $request)
+    {
+        $user = Auth::guard('client')->user();
+
+        // Validar la solicitud
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:clientes,email,' . $user->id,
+            'FechaNac' => 'required|date',
+        ]);
+
+        // Actualizar el perfil del usuario
+        $user->update([
+            'nombre' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
+            'FechaNac' => $request->FechaNac,
+        ]);
+
+        return redirect()->route('client.dashboard')->with('success', 'Perfil actualizado correctamente.');
     }
 }

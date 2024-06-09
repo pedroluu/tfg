@@ -1,6 +1,3 @@
-<?php
-use Carbon\Carbon;
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,14 +7,14 @@ use Carbon\Carbon;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    <title>Cliente Dashboard - ManagerPro</title>
+    <title>Reserva de Clases - Hades Box Center</title>
 </head>
 
 <body>
     <header class="header">
         <div class="logo">
             <a href="{{ route('home') }}">
-                <img src="../img/logo.png" alt="Logo" class="img-fluid">
+                <img src="./img/logo.png" alt="Logo" class="img-fluid">
             </a>
         </div>
         <h1>HADES BOX CENTER</h1>
@@ -37,11 +34,11 @@ use Carbon\Carbon;
                         <a class="nav-link" href="{{ route('reservar.clases') }}"><i class="fas fa-calendar-alt"></i>Reservar Clase</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i> Cuenta
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><a class="dropdown-item" href="{{ route('client.dashboard') }}">Perfil</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
@@ -58,73 +55,61 @@ use Carbon\Carbon;
     </form>
 
     <main class="container my-5">
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+        <section id="actividades" class="my-5">
+            <h2 class="text-center">Reserva tus clases</h2>
+            <div class="legend">
+                <span class="legend-item"><span class="color-box funcional"></span>Funcional</span>
+                <span class="legend-item"><span class="color-box open-box"></span>Open Box</span>
+                <span class="legend-item"><span class="color-box cross-training"></span>Cross Training</span>
+                <span class="legend-item"><span class="color-box halterofilia"></span>Halterofilia</span>
             </div>
-        @endif
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miércoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sábado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                    $horarios = [
+                    '09:30-11:00',
+                    '11:30-13:00',
+                    '13:00-14:00',
+                    '16:00-18:00',
+                    '18:30-20:00',
+                    ];
+                    $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                    @endphp
 
-        <!-- Sección de Clases Reservadas -->
-        <section class="row mb-5">
-            <div class="col-12">
-                <h4 class="section-title text-center">Tus Clases Reservadas</h4>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Clase</th>
-                            <th scope="col">Fecha Reserva</th>
-                            <th scope="col">Hora Clase</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(Auth::guard('client')->user()->reservas as $reserva)
-                            <tr>
-                                <td>{{ $reserva->clase->Nombre }}</td>
-                                <td>{{ \Carbon\Carbon::parse($reserva->FechaReserva)->format('d/m/Y') }}</td>
-                                <td>{{ $reserva->clase->hora }}</td>
-                                <td>
-                                    <form action="{{ route('cancelar.reserva', $reserva->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
-                                    </form>
-                                </td>
-                            </tr>
+                    @foreach ($horarios as $hora)
+                    <tr>
+                        <td>{{ $hora }}</td>
+                        @foreach ($dias as $dia)
+                        @php
+                        $clase = $clases->where('hora', $hora)->where('dia', $dia)->first();
+                        $class_name = strtolower(str_replace(' ', '-', $clase->Nombre ?? ''));
+                        @endphp
+                        <td class="{{ $class_name }}">
+                            @if($clase)
+                                <strong>{{ $clase->Nombre }}</strong>
+                                <form action="{{ route('reservar.clase') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="clase_id" value="{{ $clase->id }}">
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2">Reservar</button>
+                                </form>
+                            @endif
+                        </td>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Formulario de actualización del perfil -->
-        <section class="row mb-5">
-            <div class="col-12">
-                <h4 class="section-title text-center">Información del Perfil</h4>
-                <form action="{{ route('client.update') }}" method="POST" id="profile-form">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $user->nombre }}" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ $user->apellidos }}" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="FechaNac" class="form-label">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" id="FechaNac" name="FechaNac" value="{{ $user->FechaNac }}" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </form>
-            </div>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </section>
     </main>
 
@@ -157,7 +142,6 @@ use Carbon\Carbon;
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/validationUp.js') }}"></script>
 </body>
 
 </html>

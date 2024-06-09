@@ -31,25 +31,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-users"></i> Coaches</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-running"></i> Actividades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-clock"></i> Horario</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-dollar-sign"></i> Tarifas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-envelope"></i> Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-map-marker-alt"></i> Localización</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i> Zona Socios</a>
+                        <a class="nav-link" href="{{ route('home') }}"><i class="fas fa-home"></i>Inicio</a>
                     </li>
                 </ul>
             </div>
@@ -58,7 +40,7 @@
 
     <div class="form-container mt-5">
         <h1 class="form-title">TUS DATOS</h1>
-        <p class="form-subtitle">¿Cómo podemos contactar con usted?</p>
+        <p class="form-subtitle">Comienza tu rutina ¡YA!</p>
         <form method="POST" action="/ruta-de-registro" onsubmit="return validateForm(event)">
             @csrf
             <fieldset>

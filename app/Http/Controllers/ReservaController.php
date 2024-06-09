@@ -19,7 +19,7 @@ class ReservaController extends Controller
 
         if ($clase->capacidad > $clase->reservas()->count()) {
             Reserva::create([
-                'cliente_id' => Auth::id(),
+                'cliente_id' => Auth::guard('client')->id(),
                 'clase_id' => $request->clase_id,
                 'FechaReserva' => now(),
             ]);
@@ -27,6 +27,20 @@ class ReservaController extends Controller
             return redirect()->back()->with('success', 'Clase reservada exitosamente.');
         } else {
             return redirect()->back()->with('error', 'La clase está llena.');
+        }
+    }
+
+    public function cancelarReserva($id)
+    {
+        $reserva = Reserva::where('cliente_id', Auth::guard('client')->id())
+            ->where('id', $id)
+            ->first();
+
+        if ($reserva) {
+            $reserva->delete();
+            return redirect()->back()->with('success', 'Reserva cancelada exitosamente.');
+        } else {
+            return redirect()->back()->with('error', 'Reserva no encontrada.');
         }
     }
 }

@@ -29,19 +29,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-users"></i> Coaches</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#actividades"><i class="fas fa-running"></i> Actividades</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tarifas"><i class="fas fa-dollar-sign"></i> Tarifas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-envelope"></i> Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-map-marker-alt"></i> Localización</a>
                     </li>
                     @guest('client')
                     <li class="nav-item">
@@ -49,6 +40,9 @@
                     </li>
                 @endguest
                 @auth('client')
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ route('reservar.clases') }}"><i class="fas fa-calendar-alt"></i>Reservar Clase</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i> Cuenta
