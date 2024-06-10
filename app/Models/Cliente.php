@@ -9,7 +9,7 @@ class Cliente extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'cliente';
+    protected $table = 'cliente'; // Nombre correcto de la tabla
 
     protected $fillable = [
         'Nombre',
@@ -47,3 +47,4 @@ class Cliente extends Authenticatable
         return $this->belongsToMany(Clase::class, 'realiza');
     }
 }
+

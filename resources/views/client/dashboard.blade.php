@@ -105,27 +105,28 @@ use Carbon\Carbon;
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $user->nombre }}" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $user->Nombre }}">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ $user->apellidos }}" required>
+                            <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ $user->Apellidos }}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ $user->Email }}">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="FechaNac" class="form-label">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" id="FechaNac" name="FechaNac" value="{{ $user->FechaNac }}" required>
+                            <input type="date" class="form-control" id="FechaNac" name="FechaNac" value="{{ $user->FechaNac }}">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </form>
             </div>
         </section>
+
     </main>
 
     <footer class="footer">
