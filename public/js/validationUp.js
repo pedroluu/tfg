@@ -1,53 +1,43 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document
-        .getElementById("profile-form")
-        .addEventListener("submit", function (e) {
-            let valid = true;
+// public/js/profile-validation.js
+function validateProfileForm(event) {
+    const nombreInput = document.getElementById("nombre");
+    const apellidosInput = document.getElementById("apellidos");
+    const emailInput = document.getElementById("email");
+    const fechaNacInput = document.getElementById("FechaNac");
+    let valid = true;
 
-            let nombre = document.getElementById("nombre").value;
-            let apellidos = document.getElementById("apellidos").value;
-            let email = document.getElementById("email").value;
-            let FechaNac = document.getElementById("FechaNac").value;
+    if (nombreInput.value.trim() === "") {
+        nombreInput.classList.add("is-invalid");
+        valid = false;
+    } else {
+        nombreInput.classList.remove("is-invalid");
+    }
 
-            if (!nombre) {
-                valid = false;
-                alert("El campo Nombre es obligatorio.");
-            }
+    if (apellidosInput.value.trim() === "") {
+        apellidosInput.classList.add("is-invalid");
+        valid = false;
+    } else {
+        apellidosInput.classList.remove("is-invalid");
+    }
 
-            if (!apellidos) {
-                valid = false;
-                alert("El campo Apellidos es obligatorio.");
-            }
+    if (emailInput.value.trim() === "" || !validateEmail(emailInput.value)) {
+        emailInput.classList.add("is-invalid");
+        valid = false;
+    } else {
+        emailInput.classList.remove("is-invalid");
+    }
 
-            if (!email) {
-                valid = false;
-                alert("El campo Email es obligatorio.");
-            } else {
-                let emailPattern =
-                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-                if (!emailPattern.test(email)) {
-                    valid = false;
-                    alert(
-                        "Ingrese una dirección de correo electrónico válida."
-                    );
-                }
-            }
+    if (fechaNacInput.value.trim() === "") {
+        fechaNacInput.classList.add("is-invalid");
+        valid = false;
+    } else {
+        fechaNacInput.classList.remove("is-invalid");
+    }
 
-            if (!FechaNac) {
-                valid = false;
-                alert("El campo Fecha de Nacimiento es obligatorio.");
-            } else {
-                let datePattern = /^\d{4}-\d{2}-\d{2}$/;
-                if (!datePattern.test(FechaNac)) {
-                    valid = false;
-                    alert(
-                        "Ingrese una fecha de nacimiento válida (AAAA-MM-DD)."
-                    );
-                }
-            }
+    return valid;
+}
 
-            if (!valid) {
-                e.preventDefault();
-            }
-        });
-});
+function validateEmail(email) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+}

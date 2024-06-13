@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        $clases = Clase::all();
-        return view('home', compact('clases'));
+        
+        return view('home');
     }
 }

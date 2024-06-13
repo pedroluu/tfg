@@ -8,9 +8,16 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReservaController;
 use App\Models\Clase;
+use App\Http\Controllers\Admin\ClienteController;
+
+
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('form', FormController::class)->name('form');
+Route::get('/form', [FormController::class, 'showForm'])->name('form');
+
+
+Route::get('/register', [FormController::class, 'showForm'])->name('register');
+Route::post('/register', [FormController::class, 'register'])->name('register.submit');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -18,7 +25,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    // Otras rutas de admin
+    Route::resource('admin/clientes', ClienteController::class)->names('admin.clientes');
+    Route::put('admin/clientes/{cliente}', [ClienteController::class, 'update'])->name('admin.clientes.update');
+
 });
 
 Route::middleware('auth:client')->group(function () {

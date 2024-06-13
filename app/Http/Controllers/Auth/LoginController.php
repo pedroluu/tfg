@@ -33,7 +33,7 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'Usuario' => 'Las credenciales no coinciden con nuestros registros.',
+            'error' => 'Las credenciales no coinciden con nuestros registros.',
         ]);
     }
 

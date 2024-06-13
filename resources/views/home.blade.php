@@ -11,19 +11,18 @@
 </head>
 
 <body>
-    <header class="header">
+     <header class="header">
         <div class="logo">
             <a href="{{ route('home') }}">
-            <img src="./img/logo.png" alt="Logo" class="img-fluid">
-        </a>
+                <img src="./img/logo.png" alt="Logo" class="img-fluid">
+            </a>
         </div>
         <h1>HADES BOX CENTER</h1>
-        <h2>FORGING FITNESS</h2>
-        <p>VEN A ENTRENAR CON NOSOTROS</p>
-        <a class="btn btn-light" href="{{ route('form') }}">Apúntate ahora</a>
-        <div class="navbar navbar-expand-lg navbar-dark">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <h2 id="header-subtitle">FORGING FITNESS</h2>
+        <p id="header-text">VEN A ENTRENAR CON NOSOTROS</p>
+        <a id="header-button" class="btn btn-light" href="{{ route('form') }}">Apúntate ahora</a>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -36,12 +35,15 @@
                     </li>
                     @guest('client')
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-user"></i> Login</a>
                     </li>
-                @endguest
-                @auth('client')
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ route('reservar.clases') }}"><i class="fas fa-calendar-alt"></i>Reservar Clase</a>
+                        <a class="nav-link" href="{{ route('register') }}"><i class="fas fa-sign-in-alt"></i> Registro</a>
+                    </li>
+                    @endguest
+                    @auth('client')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('reservar.clases') }}"><i class="fas fa-calendar-alt"></i> Reservar Clase</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,11 +57,32 @@
                             </li>
                         </ul>
                     </li>
-                @endauth
+                    @endauth
+
+
+                    @auth('admin')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cogs"></i> Administración
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                            <li><a class="dropdown-item" href="{{ route('admin.clientes.index') }}">Clientes</a></li>
+                            <!-- Añade más enlaces según sea necesario -->
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i>Admin Logout</a>
+                    </li>
+                    @endauth
                 </ul>
             </div>
-        </div>
+        </nav>
     </header>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
+
 
     <main class="container my-5">
         <section class="row mb-5">
@@ -92,7 +115,7 @@
             </div>
         </section>
 
-        <section  id="actividades" class="my-5">
+        <section class="my-5" id="actividades">
             <h2 class="text-center">Actividades y Clases</h2>
             <div class="legend">
                 <span class="legend-item"><span class="color-box funcional"></span>Funcional</span>
@@ -100,46 +123,69 @@
                 <span class="legend-item"><span class="color-box cross-training"></span>Cross Training</span>
                 <span class="legend-item"><span class="color-box halterofilia"></span>Halterofilia</span>
             </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miércoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                        <th>Sábado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                    $horarios = [
-                    '09:30-11:00',
-                    '11:30-13:00',
-                    '13:00-14:00',
-                    '16:00-18:00',
-                    '18:30-20:00',
-                    ];
-                    $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-                    @endphp
-
-                    @foreach ($horarios as $hora)
-                    <tr>
-                        <td>{{ $hora }}</td>
-                        @foreach ($dias as $dia)
-                        @php
-                        $clase = $clases->where('hora', $hora)->where('dia', $dia)->first();
-                        $class_name = strtolower(str_replace(' ', '-', $clase->Nombre ?? ''));
-                        @endphp
-                        <td class="{{ $class_name }}">{{ $clase->Nombre ?? '' }}</td>
-                        @endforeach
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Lunes</th>
+                            <th>Martes</th>
+                            <th>Miércoles</th>
+                            <th>Jueves</th>
+                            <th>Viernes</th>
+                            <th>Sábado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9:30-11:00</td>
+                            <td class="funcional">Funcional</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="open-box">Open Box</td>
+                        </tr>
+                        <tr>
+                            <td>11:30-13:00</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="funcional">Funcional</td>
+                            <td class="cross-training">Cross Training</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="cross-training">Cross Training</td>
+                            <td class="funcional">Funcional</td>
+                        </tr>
+                        <tr>
+                            <td>13:00-14:00</td>
+                            <td class="cross-training">Cross Training</td>
+                            <td class="cross-training">Cross Training</td>
+                            <td class="funcional">Funcional</td>
+                            <td class="halterofilia">Halterofilia</td>
+                            <td class="funcional">Funcional</td>
+                            <td class="cross-training">Cross Training</td>
+                        </tr>
+                        <tr>
+                            <td>16:00-18:00</td>
+                            <td class="halterofilia">Halterofilia</td>
+                            <td class="halterofilia">Halterofilia</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="funcional">Funcional</td>
+                            <td class="cross-training">Cross Training</td>
+                            <td class="halterofilia">Halterofilia</td>
+                        </tr>
+                        <tr>
+                            <td>18:30-20:00</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="cross-training">Cross Training</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="open-box">Open Box</td>
+                            <td class="open-box">Open Box</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
-
         <section id="tarifas" class="section pricing text-center">
             <h2>TARIFAS</h2>
             <p>No es lo que tú tienes, sino cómo usas lo que tienes lo que marca la diferencia</p>
@@ -202,13 +248,13 @@
         </div>
     </footer>
 
-
-
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+         <script src="./js/navResponsive.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +14,9 @@ class CreateReservaTable extends Migration
             $table->foreignId('clase_id')->constrained('clase');
             $table->date('FechaReserva');
             $table->timestamps();
+
+            // Agregar índice único
+            $table->unique(['cliente_id', 'clase_id']);
         });
     }
 
@@ -23,3 +25,4 @@ class CreateReservaTable extends Migration
         Schema::dropIfExists('reserva');
     }
 }
+

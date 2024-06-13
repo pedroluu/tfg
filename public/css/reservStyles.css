@@ -16,6 +16,11 @@
     max-height: 100px; /* Ajusta el tamaño del logo */
 }
 
+#log-btn {
+    border-color: #009999;
+    background-color: #009999 !important;
+}
+
 .header h1 {
     margin-top: 20px;
     font-size: 2.5rem;
@@ -52,47 +57,6 @@
 .navbar-nav .nav-item .nav-link:hover {
     color: #ccc; /* Cambia el color al pasar el ratón */
 }
-
-@media (max-width: 991.98px) {
-    .header .navbar {
-        position: relative;
-        bottom: 0;
-    }
-
-    .navbar-collapse {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    .navbar-nav .nav-link {
-        color: white;
-        padding: 10px;
-    }
-
-    .navbar-toggler {
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .navbar-toggler-icon {
-        color: white;
-    }
-}
-
-/* Estilos previos aquí */
-
-/* Ajustes adicionales para asegurar que el contenido no se sobreponga */
-@media (max-width: 991.98px) {
-    #header-subtitle, #header-text, #header-button {
-        display: none;
-    }
-
-    .navbar-collapse.show + #header-subtitle, 
-    .navbar-collapse.show + #header-text, 
-    .navbar-collapse.show + #header-button {
-        display: none;
-    }
-}
-
-
 
 .main {
     margin-top: 40px;
@@ -182,73 +146,14 @@ p {
 .table tbody .halterofilia {
     background-color: #f0e68c; /* Color para Halterofilia */
 }
-.pricing {
-    background-color: rgb(24, 79, 134);
-    color: #fff;
-    padding: 50px 0;
-    border-radius: 10px;
+
+table .btn {
+    border-color: #007777;
+    background-color: #009999;
 }
 
-.pricing h2 {
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.pricing p {
-    color: #bbb;
-    margin-bottom: 40px;
-}
-
-.pricing-cards {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.pricing-card {
-    background-color: #fff;
-    color: #333;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    flex: 1 1 300px;
-    max-width: 300px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.pricing-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.pricing-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #123;
-}
-
-.pricing-card .price {
-    font-size: 2rem;
-    color: #009999;
-    margin-bottom: 10px;
-}
-
-.pricing-card .currency {
-    font-size: 1rem;
-}
-
-.pricing-card p {
-    margin: 10px 0;
-    font-size: 1rem;
-    color: #666;
-}
-
-.price-three-months {
-    font-size: 1.2rem;
-    color: #666;
-    margin-top: 20px;
+section .btn {
+    background-color: #009999;
 }
 
 .button-container {
@@ -270,6 +175,7 @@ p {
     background-color: #007777;
 }
 
+/* Otros estilos existentes */
 
 /* Estilos de footer */
 .footer {
@@ -323,4 +229,3 @@ p {
     font-size: 0.9rem;
     color: #bbb;
 }
-
