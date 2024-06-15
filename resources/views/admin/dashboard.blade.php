@@ -13,7 +13,7 @@
 <body>
      <header class="header">
         <div class="logo">
-            <a href="{{ route('home') }}">
+            <a href="{{ route('admin.dashboard') }}">
                 <img src="../img/logo.png" alt="Logo" class="img-fluid">
             </a>
         </div>
@@ -40,6 +40,8 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                             <li><a class="dropdown-item" href="{{ route('admin.clientes.index') }}">Clientes</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.entrenadores.index') }}">Entrenadores</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.clases.index') }}">Clases</a></li>
                             <!-- Añade más enlaces según sea necesario -->
                         </ul>
                     </li>
@@ -227,7 +229,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-         <script src="./js/navResponsive.js"></script>
+    <script src="{{ asset('js/navResponsive.js') }}"></script>
 </body>
 
 </html>

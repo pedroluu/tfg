@@ -7,8 +7,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\ClaseController;
 use App\Models\Clase;
 use App\Http\Controllers\Admin\ClienteController;
+use App\Http\Controllers\Admin\EntrenadorController;
+
 
 
 
@@ -28,6 +31,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('admin/clientes', ClienteController::class)->names('admin.clientes');
     Route::put('admin/clientes/{cliente}', [ClienteController::class, 'update'])->name('admin.clientes.update');
 
+    Route::resource('admin/entrenadores', EntrenadorController::class)->names('admin.entrenadores');
+
+    Route::resource('admin/clases', ClaseController::class)->names('admin.clases');
+
+
 });
 
 Route::middleware('auth:client')->group(function () {
@@ -41,3 +49,7 @@ Route::middleware('auth:client')->group(function () {
     Route::post('/client/update', [ClientController::class, 'update'])->name('client.update');
     // Otras rutas de client
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('css/perfilStyles.css') }}" rel="stylesheet">
-    <title>Gestión de Clientes - Hades Box Center</title>
+    <title>Gestión de Entrenadores - Hades Box Center</title>
 </head>
 <body>
     <header class="header">
@@ -56,36 +56,34 @@
             </div>
         @endif
 
-        <h1>Gestión de Clientes</h1>
+        <h1>Gestión de Entrenadores</h1>
 
-        <!-- Listar Clientes -->
+        <!-- Listar Entrenadores -->
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>NIF</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
-                        <th>Email</th>
-                        <th>Usuario</th>
                         <th>Fecha de Nacimiento</th>
-                        <th>Tarifa</th>
+                        <th>Sueldo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($clientes as $cliente)
+                    @foreach($entrenadores as $entrenador)
                         <tr>
-                            <td>{{ $cliente->id }}</td>
-                            <td>{{ $cliente->Nombre }}</td>
-                            <td>{{ $cliente->Apellidos }}</td>
-                            <td>{{ $cliente->Email }}</td>
-                            <td>{{ $cliente->Usuario }}</td>
-                            <td>{{ $cliente->FechaNac }}</td>
-                            <td>{{ $cliente->Cuota }} €/mes</td>
+                            <td>{{ $entrenador->id }}</td>
+                            <td>{{ $entrenador->NIF }}</td>
+                            <td>{{ $entrenador->Nombre }}</td>
+                            <td>{{ $entrenador->Apellidos }}</td>
+                            <td>{{ $entrenador->FechaNac }}</td>
+                            <td>{{ $entrenador->Sueldo }} €/mes</td>
                             <td>
-                                <button class="btn btn-warning" onclick="editCliente({{ $cliente }})">Editar</button>
-                                <form action="{{ route('admin.clientes.destroy', $cliente->id) }}" method="POST" style="display:inline;">
+                                <button class="btn btn-warning" onclick="editEntrenador({{ $entrenador }})">Editar</button>
+                                <form action="{{ route('admin.entrenadores.destroy', $entrenador->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -97,13 +95,17 @@
             </table>
         </div>
 
-        <!-- Formulario Crear/Editar Cliente -->
-        <div id="clienteFormContainer">
-            <h2 id="formTitle">Añadir Cliente</h2>
-            <button id="addbtn" class="btn btn-secondary mb-3" onclick="resetForm()">Nuevo Cliente</button>
-            <form action="{{ route('admin.clientes.store') }}" method="POST" id="clienteForm">
+        <!-- Formulario Crear/Editar Entrenador -->
+        <div id="entrenadorFormContainer">
+            <h2 id="formTitle">Añadir Entrenador</h2>
+            <button id="addbtn" class="btn btn-secondary mb-3" onclick="resetForm()">Nuevo Entrenador</button>
+            <form action="{{ route('admin.entrenadores.store') }}" method="POST" id="entrenadorForm">
                 @csrf
-                <input type="hidden" id="clienteId" name="id">
+                <input type="hidden" id="entrenadorId" name="id">
+                <div class="mb-3">
+                    <label for="NIF" class="form-label">NIF</label>
+                    <input type="text" class="form-control" id="NIF" name="NIF" required>
+                </div>
                 <div class="mb-3">
                     <label for="Nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="Nombre" name="Nombre" required>
@@ -113,29 +115,12 @@
                     <input type="text" class="form-control" id="Apellidos" name="Apellidos" required>
                 </div>
                 <div class="mb-3">
-                    <label for="Email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="Email" name="Email" required>
-                </div>
-                <div class="mb-3">
-                    <label for="Usuario" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" id="Usuario" name="Usuario" required>
-                </div>
-                <div class="mb-3">
                     <label for="FechaNac" class="form-label">Fecha de Nacimiento</label>
                     <input type="date" class="form-control" id="FechaNac" name="FechaNac" required>
                 </div>
                 <div class="mb-3">
-                    <label for="Cuota" class="form-label">Tarifa</label>
-                    <select class="form-control" id="Cuota" name="Cuota">
-                        <option value="40" {{ old('Cuota') == '40' ? 'selected' : '' }}>HADES - 40 €/mes</option>
-                        <option value="35" {{ old('Cuota') == '35' ? 'selected' : '' }}>ZEUS - 35 €/mes</option>
-                        <option value="30" {{ old('Cuota') == '30' ? 'selected' : '' }}>POSEIDÓN - 30 €/mes</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                    <small id="passwordHelp" class="form-text text-muted">Dejar en blanco para no cambiar la contraseña(Solo si vas a editar el perfil)</small>
+                    <label for="Sueldo" class="form-label">Sueldo</label>
+                    <input type="number" class="form-control" id="Sueldo" name="Sueldo" step="0.01" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
@@ -147,7 +132,8 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Sobre Nosotros</h4>
-                    <p>Hades Box Center es un gimnasio dedicado a ofrecer entrenamiento de alta calidad. Únete a nosotros y lleva tu rendimiento al siguiente nivel.</p>
+                    <p>Hades Box Center es un gimnasio dedicado a ofrecer entrenamiento de alta calidad. Únete a
+                        nosotros y lleva tu rendimiento al siguiente nivel.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Contacto</h4>
@@ -162,52 +148,50 @@
                     <p><a href="#">Twitter</a></p>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 Hades Box Center. Todos los derechos reservados.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hades Box Center. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/navResponsive.js') }}"></script>
-   <script>
-        function editCliente(cliente) {
-            document.getElementById('formTitle').innerText = 'Editar Cliente';
-            document.getElementById('clienteForm').action = '{{ route('admin.clientes.update', ['cliente' => ':cliente']) }}'.replace(':cliente', cliente.id);
-            document.getElementById('clienteForm').insertAdjacentHTML('beforeend', '<input type="hidden" name="_method" value="PUT">');
-            document.getElementById('clienteId').value = cliente.id;
-            document.getElementById('Nombre').value = cliente.Nombre;
-            document.getElementById('Apellidos').value = cliente.Apellidos;
-            document.getElementById('FechaNac').value = cliente.FechaNac;
-            document.getElementById('password').value = '';
-
-            document.getElementById('Cuota').disabled = true;
-            document.getElementById('Email').disabled = true;
-            document.getElementById('Usuario').disabled = true;
+    <script>
+        function editEntrenador(entrenador) {
+            document.getElementById('formTitle').innerText = 'Editar Entrenador';
+            document.getElementById('entrenadorForm').action = '{{ route('admin.entrenadores.update', ':entrenador') }}'.replace(':entrenador', entrenador.id);
+            let methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'PUT');
+            document.getElementById('entrenadorForm').appendChild(methodInput);
+            document.getElementById('entrenadorId').value = entrenador.id;
+            document.getElementById('NIF').value = entrenador.NIF;
+            document.getElementById('Nombre').value = entrenador.Nombre;
+            document.getElementById('Apellidos').value = entrenador.Apellidos;
+            document.getElementById('FechaNac').value = entrenador.FechaNac;
+            document.getElementById('Sueldo').value = entrenador.Sueldo;
+            document.getElementById('NIF').disabled = true;
         }
 
         function resetForm() {
-            document.getElementById('formTitle').innerText = 'Añadir Cliente';
-            document.getElementById('clienteForm').action = '{{ route('admin.clientes.store') }}';
+            document.getElementById('formTitle').innerText = 'Añadir Entrenador';
+            document.getElementById('entrenadorForm').action = '{{ route('admin.entrenadores.store') }}';
             let methodInput = document.querySelector('input[name="_method"]');
             if (methodInput) {
                 methodInput.remove();
             }
-            document.getElementById('clienteId').value = '';
+            document.getElementById('entrenadorId').value = '';
+            document.getElementById('NIF').value = '';
             document.getElementById('Nombre').value = '';
             document.getElementById('Apellidos').value = '';
-            document.getElementById('Email').value = '';
-            document.getElementById('Usuario').value = '';
             document.getElementById('FechaNac').value = '';
-            document.getElementById('Cuota').value = '40'; // Selecciona la primera opción por defecto
-            document.getElementById('password').value = '';
-
-            document.getElementById('Email').disabled = false;
-            document.getElementById('Usuario').disabled = false;
-            document.getElementById('Cuota').disabled = false;
+            document.getElementById('Sueldo').value = '';
+            document.getElementById('NIF').disabled = false;
         }
 
-        document.getElementById('clienteForm').addEventListener('reset', resetForm);
+        document.getElementById('entrenadorForm').addEventListener('reset', resetForm);
     </script>
 </body>
 </html>

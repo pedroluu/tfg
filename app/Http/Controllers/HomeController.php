@@ -9,7 +9,12 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        
+
+        return view('home');
+    }
+    public function index()
+    {
+
         return view('home');
     }
 }

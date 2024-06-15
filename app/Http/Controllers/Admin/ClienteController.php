@@ -34,7 +34,7 @@ class ClienteController extends Controller
             'Apellidos' => $request->Apellidos,
             'Email' => $request->Email,
             'Usuario' => $request->Usuario,
-            'password' => Hash::make($request->password),
+            'password' => ($request->password),
             'FechaNac' => $request->FechaNac,
             'Cuota' => $request->Cuota,
             'gimnasio_id' => 1,
@@ -55,7 +55,6 @@ class ClienteController extends Controller
                 'Apellidos' => 'required|string|max:255',
                 'password' => 'nullable|string|min:8',
                 'FechaNac' => 'required|date',
-                'Cuota' => 'required|numeric',
             ]);
 
             Log::debug('Datos validados correctamente', $request->all());
@@ -63,7 +62,6 @@ class ClienteController extends Controller
             $cliente->Nombre = $request->Nombre;
             $cliente->Apellidos = $request->Apellidos;
             $cliente->FechaNac = $request->FechaNac;
-            $cliente->Cuota = $request->Cuota;
 
             if ($request->filled('password')) {
                 $cliente->password = Hash::make($request->password);
@@ -86,9 +84,22 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
 
+        // Obtener las reservas asociadas al cliente
+        $reservas = Reserva::where('cliente_id', $id)->get();
+
+        // Actualizar la capacidad de la clase asociada a cada reserva antes de eliminarla
+        foreach ($reservas as $reserva) {
+            $clase = $reserva->clase;
+            if ($clase) {
+                $clase->capacidad += 1; // Ajusta según la lógica de tu aplicación
+                $clase->save();
+            }
+        }
+
         // Eliminar reservas asociadas al cliente
         Reserva::where('cliente_id', $id)->delete();
 
+        // Eliminar el cliente
         $cliente->delete();
 
         return redirect()->route('admin.clientes.index')->with('success', 'Cliente eliminado con éxito.');
