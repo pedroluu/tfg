@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -25,12 +26,13 @@ class LoginController extends Controller
         $credentials = $request->only('Usuario', 'password');
 
         if ($this->attemptLogin($credentials, 'admin')) {
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         if ($this->attemptLogin($credentials, 'client')) {
-            return redirect()->intended('/');
+            return redirect()->route('home'); // Redirige al nombre de la ruta 'home'
         }
+
 
         return back()->withErrors([
             'error' => 'Las credenciales no coinciden con nuestros registros.',

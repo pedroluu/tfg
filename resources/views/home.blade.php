@@ -67,6 +67,8 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                             <li><a class="dropdown-item" href="{{ route('admin.clientes.index') }}">Clientes</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.clases.index') }}">Clases</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.entrenadors.index') }}">Entrenadores</a></li>
                             <!-- Añade más enlaces según sea necesario -->
                         </ul>
                     </li>
@@ -233,7 +235,7 @@
                     <h4>Contacto</h4>
                     <p>Email: info@hadesboxcenter.com</p>
                     <p>Teléfono: +34 123 456 789</p>
-                    <p>Dirección: Calle Ejemplo 123, Ciudad, País</p>
+                    <p>Dirección:  C. Paz, 13, 45470 Los Yébenes, Toledo</p>
                 </div>
                 <div class="footer-section">
                     <h4>Síguenos</h4>

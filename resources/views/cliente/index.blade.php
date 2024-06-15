@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Clase
+    Cliente
 @endsection
 
 @push('styles')
@@ -45,36 +45,29 @@
     </nav>
 </header>
 
-
 @section('content')
 
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-    </form>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>
 
-    <main class="container my-5">
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success m-4">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
-
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="card_title">
-                                {{ __('Clase') }}
-                            </span>
 
-                            <div class="float-right">
-                                <a href="{{ route('admin.clases.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
-                            </div>
+                            <span id="card_title">
+                                {{ __('Cliente') }}
+                            </span>
                         </div>
                     </div>
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success m-4">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
 
                     <div class="card-body bg-white">
                         <div class="table-responsive">
@@ -82,29 +75,35 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>Nombre</th>
-                                        <th>Ejercicios</th>
-                                        <th>Capacidad</th>
-                                        <th>Entrenador Id</th>
-                                        <th>Hora</th>
-                                        <th>Dia</th>
+
+										<th>Nombre</th>
+										<th>Apellidos</th>
+										<th>Fechanac</th>
+										<th>Cuota</th>
+										<th>Email</th>
+										<th>Usuario</th>
+										<th>Gimnasio Id</th>
+
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($clases as $clase)
+                                    @foreach ($clientes as $cliente)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            <td>{{ $clase->Nombre }}</td>
-                                            <td>{{ $clase->ejercicios }}</td>
-                                            <td>{{ $clase->capacidad }}</td>
-                                            <td>{{ $clase->entrenador_id }}</td>
-                                            <td>{{ $clase->hora }}</td>
-                                            <td>{{ $clase->dia }}</td>
+
+											<td>{{ $cliente->Nombre }}</td>
+											<td>{{ $cliente->Apellidos }}</td>
+											<td>{{ $cliente->FechaNac }}</td>
+											<td>{{ $cliente->Cuota }}</td>
+											<td>{{ $cliente->Email }}</td>
+											<td>{{ $cliente->Usuario }}</td>
+											<td>{{ $cliente->gimnasio_id }}</td>
+
                                             <td>
-                                                <form action="{{ route('admin.clases.destroy', $clase->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary" href="{{ route('admin.clases.show', $clase->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('admin.clases.edit', $clase->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('admin.clientes.destroy',$cliente->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('admin.clientes.show',$cliente->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('admin.clientes.edit',$cliente->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
@@ -117,10 +116,10 @@
                         </div>
                     </div>
                 </div>
-                {!! $clases->links() !!}
+                {!! $clientes->links() !!}
             </div>
         </div>
-    </main>
+    </div>
 
     <footer class="footer">
         <div class="container">
@@ -148,3 +147,5 @@
         </div>
     </footer>
 @endsection
+
+

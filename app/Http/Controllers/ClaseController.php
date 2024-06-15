@@ -38,7 +38,7 @@ class ClaseController extends Controller
     {
         Clase::create($request->validated());
 
-        return redirect()->route('clases.index')
+        return redirect()->route('admin.clases.index')
             ->with('success', 'Clase created successfully.');
     }
 

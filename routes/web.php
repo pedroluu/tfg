@@ -9,9 +9,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\ClaseController;
 use App\Models\Clase;
-use App\Http\Controllers\Admin\ClienteController;
-use App\Http\Controllers\Admin\EntrenadorController;
-
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EntrenadorController;
 
 
 
@@ -28,10 +27,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::resource('admin/clientes', ClienteController::class)->names('admin.clientes');
-    Route::put('admin/clientes/{cliente}', [ClienteController::class, 'update'])->name('admin.clientes.update');
+    Route::resource('/admin/clientes', ClienteController::class)->names('admin.clientes');
 
-    Route::resource('admin/entrenadores', EntrenadorController::class)->names('admin.entrenadores');
+    Route::resource('admin/entrenadores', EntrenadorController::class)->names('admin.entrenadors');
 
     Route::resource('admin/clases', ClaseController::class)->names('admin.clases');
 
@@ -50,6 +48,5 @@ Route::middleware('auth:client')->group(function () {
     // Otras rutas de client
 });
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
